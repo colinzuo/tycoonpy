@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tycoonpy"
+description = "tycoon python"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["tycoon"]
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+dependencies = [
+    "blinker",
+    "fastapi[standard]",
+    "pydantic",
+    "pyhocon"
+]
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "tycoonpy.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+tycoonpy = ["py.typed"]
+
+[tool.mypy]
+# strict = true
+
+[[tool.mypy.overrides]]
+module = "pyhocon.*"
+ignore_missing_imports = true
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "B019",  # Use of `functools.lru_cache` or `functools.cache` on methods can lead to memory leaks
+    "C901",  # too complex
+    "W191",  # indentation contains tabs
+]
