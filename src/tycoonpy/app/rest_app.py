@@ -3,10 +3,10 @@ import logging
 import uvicorn
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from hpyhrtbase import hpyhrt_context, init_app_base
+from hpyhrtbase import hpyhrt_context
 from hpyhrtbase.utils import TimeUtil
 
-from tycoonpy.app.data_app import data_app_setup
+from tycoonpy.app.tycoon_app import tycoon_app_setup
 from tycoonpy.controller import (
     user_quality_controller,
 )
@@ -51,14 +51,9 @@ def debug_main():
     mod_logger.debug(f"Leave duration {duration:.3}")
 
 if __name__ == "__main__":
-    config_file = "configs/tycoonpy.conf"
-    init_app_base.init_app_base(
-        config_file, init_app_default_configs, check_dir_names=["src", "tests"]
-    )
+    tycoon_app_setup("configs/tycoonpy.conf")
 
     config_inst = hpyhrt_context.get_config_inst()
-
-    data_app_setup()
 
     app = rest_app_setup()
 
