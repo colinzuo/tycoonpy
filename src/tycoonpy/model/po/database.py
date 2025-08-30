@@ -25,5 +25,7 @@ def setup_database(db_url: str) -> None:
         engine = create_engine(db_url, echo=False, connect_args=connect_args)
         with engine.connect() as connection:
             connection.execute(text("PRAGMA foreign_keys=ON"))
+    else:
+        engine = create_engine(db_url)
 
     SQLModel.metadata.create_all(engine)
